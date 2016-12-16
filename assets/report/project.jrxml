@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="project" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c6c0d0c-0169-4d47-804d-739c018f35e0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="37"/>
+	<subDataset name="dataset1" uuid="b3daa271-e86e-431c-8dca-f14fea07f8e6"/>
+	<parameter name="company" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="category" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="month" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DUR.DRAID
+       ,CMP.CMPLNAME
+       ,DUR.DRANAME
+       ,DUR.DRAAMT
+       ,TBL.TBDDESC
+       ,DATE_FORMAT(DEP.DEPDAT,'%d/%m/%Y') AS DEPDAT
+       ,DEP.DEPLASTCST
+       ,DUR.DRADEPRT
+       ,DEP.DEPLASTBV
+       ,DEP.DEPLASTMNT
+       ,DEP.DEPCURMNT
+       ,dep.DEPALLMNT
+       ,dep.DEPACCDEPLAST
+       ,dep.DEPDEPPERMNT
+       ,dep.DEPACCDEPCUR
+       ,dep.DEPACCDEPALL
+       ,dep.DEPBVCUR
+ FROM depdetail DEP
+ JOIN DURABLEARTICLES DUR ON DUR.DRAID = DEP.DRAID
+ JOIN COMPANY CMP ON CMP.CMPCD = DUR.CMPCD
+ JOIN tabledetail TBL ON TBL.TBDNO = 100 AND TBL.TBDCD = DUR.DRATYP
+ WHERE dep.CMPCD = $P{company} and dur.DRATYP = $P{category}  and DEPCURMNT = $P{month} and dep.DEPYEAR=$P{year}]]>
+	</queryString>
+	<field name="DRAID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CMPLNAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DRANAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DRAAMT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TBDDESC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPDAT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPLASTCST" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DRADEPRT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPLASTBV" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPLASTMNT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPCURMNT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPALLMNT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPACCDEPLAST" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPDEPPERMNT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPACCDEPCUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPACCDEPALL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPBVCUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="sumCost" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPLASTCST}]]></variableExpression>
+	</variable>
+	<variable name="sumBVLast" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPLASTBV}]]></variableExpression>
+	</variable>
+	<variable name="sumAccDepLast" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPACCDEPLAST}]]></variableExpression>
+	</variable>
+	<variable name="sumDepPerMn" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPDEPPERMNT}]]></variableExpression>
+	</variable>
+	<variable name="accDepCur" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPACCDEPCUR}]]></variableExpression>
+	</variable>
+	<variable name="accDepAll" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPACCDEPALL}]]></variableExpression>
+	</variable>
+	<variable name="sumBVcur" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEPBVCUR}]]></variableExpression>
+	</variable>
+	<variable name="no" class="java.lang.Number" incrementType="Report"/>
+	<title>
+		<band height="140" splitType="Stretch">
+			<staticText>
+				<reportElement x="560" y="40" width="60" height="20" uuid="092edeb0-724e-4005-bf8e-3d2196dba98a"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[วันที่พิมพ์ ]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="800" height="40" isPrintInFirstWholeBand="true" uuid="d8ed963a-d6cf-4335-b0d6-ed364f110abe"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["รายงานค่าสึกหรอและค่าเสื่อมราคา"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="620" y="40" width="10" height="20" uuid="72e4859a-fd29-4864-85b7-968e0d43d6a1"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="630" y="40" width="170" height="20" uuid="236a21a7-0e06-4a81-8cf4-fa19eb9cb299"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="25" y="80" width="325" height="20" uuid="6cd4eb13-24e5-40b0-81ba-9a5d278ed082"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CMPLNAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="100" width="105" height="20" uuid="5aecce08-b6cb-4d28-b11f-8ae5b18ccb68"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[รอบระยะเวลาบัญชี ตั้งแต่  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="120" width="325" height="20" uuid="783005f2-2c13-4eff-84a7-fbdadd1789bc"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[รายการที่ 7  ค่าสึกหรอและค่าเสื่อมราคาที่หักได้ตามพระราชกฤษฏีกาฯ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="100" width="10" height="20" uuid="0a0f52ca-4a47-4362-97ac-dd03aabfe56d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="100" width="50" height="20" uuid="1b0ddf24-1475-40a7-bb63-aa6a69abd317"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<text><![CDATA[1  มกราคม]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="100" width="30" height="20" uuid="9950b9c4-bfdf-46cf-8972-b34922a0e7ef"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="220" y="100" width="18" height="20" uuid="af3532c3-733e-4861-8a3c-74c44d55be79"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ถึง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="100" width="53" height="20" uuid="401ef0dc-c0ff-4622-8179-7a5233731a1e"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<text><![CDATA[31  ธันวาคม]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="100" width="60" height="20" uuid="d96d3f4b-39b0-48f6-a225-b7da6c34e51d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="79" width="50" height="20" uuid="2df3b768-0df8-433c-bda0-872f08a092cb"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ประเภท    :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="499" y="79" width="123" height="20" uuid="4c93dec6-6086-4214-84c2-dc1a15b5bc9b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TBDDESC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="80" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="800" height="80" uuid="6449ba99-d32e-4824-ba1f-4af81e57e938"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="25" height="80" uuid="155df580-ea60-4b2f-bb93-fd83a7bdfe3b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ลำดับ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="130" y="0" width="60" height="80" uuid="29a78b99-6655-4724-bbe4-3c4f1c38b20c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[วันเดือนปี
+ที่ได้มา]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="290" y="0" width="60" height="80" uuid="820f33dc-6fae-4c4c-b0ce-759170fc265f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[BV
+ยกมา]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="350" y="0" width="50" height="80" uuid="e4319559-1429-4cf1-a53e-d2674afc690b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[จำนวนเดือน
+ใช้สินทรัพย์
+จากปีก่อน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="400" y="0" width="50" height="80" uuid="498093bd-5016-4f51-ab0a-71d21c764c6f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[จำนวนเดือน
+ใช้สินทรัพย์
+ปีปัจจุบัน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="450" y="0" width="50" height="80" uuid="64f27427-d7f4-4df8-abbb-92b73d1adf01"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[จำนวนเดือน
+ใช้สินทรัพย์
+สิ้นสุดปีปัจจุบัน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="500" y="0" width="60" height="80" uuid="2f76c739-2870-4fe6-8293-9620f46da4eb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACC-DEP
+จากปีก่อน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="560" y="0" width="60" height="80" uuid="ddd14dcb-e630-4cfe-b78c-ebbb3d1887ac"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEP
+ต่อเดือน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="620" y="0" width="60" height="80" uuid="42af4588-cfc7-445d-9959-febe6581d3fd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACC-DEP
+ปีปัจจุบัน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="680" y="0" width="60" height="80" uuid="30c5266d-e63f-4188-903b-2964769071ba"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ACC-DEP
+สิ้นสุด
+ปีปัจจุบัน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="740" y="0" width="60" height="80" uuid="703c38ad-3ac7-455d-b9c2-fee7bc271cce"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[BV
+ปีปัจจุบัน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="25" y="0" width="105" height="80" uuid="3db6b14e-b67f-4a50-abd8-2417527e40fa"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[รายการ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="220" y="0" width="70" height="80" uuid="84f9c86f-38b9-4c0d-90d6-889879e44efe"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[สินทรัพย์
+ย/ม จากปีก่อน
+(ราคาทุน)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="190" y="0" width="30" height="80" uuid="3675d8ff-8ed9-4b1e-90fa-d8cbbe0f2bfb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="AngsanaUPC" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[จำนวน]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="800" height="20" uuid="435527cb-9fb0-40f7-9943-5ecab6df964c"/>
+				<textField>
+					<reportElement x="25" y="0" width="105" height="20" uuid="7e845c6e-b3b2-4618-a753-6b5777f39b8b"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+						<paragraph leftIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DRANAME}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="130" y="0" width="60" height="20" uuid="3d7dd2e6-4047-4cb0-b13b-5b8823cb40c6"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPDAT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="190" y="0" width="30" height="20" uuid="f4c2499b-3d96-4338-b59c-1e121936b866"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DRAAMT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="220" y="0" width="70" height="20" uuid="7d34f5c7-f54d-49c4-9fbc-d21f1dcd3d33"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPLASTCST}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="290" y="0" width="60" height="20" uuid="9999903a-2d50-4daf-a04b-af02cefb2611"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPLASTBV}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="350" y="0" width="50" height="20" uuid="3bfa3e37-f59c-492c-8d40-34429acc9893"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPLASTMNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="400" y="0" width="50" height="20" uuid="d9957627-b376-4025-8d1e-cfb6dfcbb9e6"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPCURMNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="450" y="0" width="50" height="20" uuid="af27027c-1130-4734-a2be-3415304755c5"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPALLMNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="500" y="0" width="60" height="20" uuid="f54ec96f-2fd3-4ac3-84e0-3a36e60d965f"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPACCDEPLAST}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="560" y="0" width="60" height="20" uuid="be498e7f-4046-403b-b081-8ca8b879a881"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPDEPPERMNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="620" y="0" width="60" height="20" uuid="538027d9-5423-4661-81dd-cc18f0ab8d87"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPACCDEPCUR}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="680" y="0" width="60" height="20" uuid="ed217763-13db-4651-a1d0-760c291f6983"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPACCDEPALL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="740" y="0" width="60" height="20" uuid="d39a2827-5ae7-4d4a-b480-d703862ce4d4"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPBVCUR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="25" height="20" uuid="3e61a314-6992-4d2c-9825-abda4bb8b5ec"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="AngsanaUPC" size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="220" height="20" uuid="501a91de-f2b6-4e8d-83c8-dbdaa7a75e15"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+					<paragraph rightIndent="10"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="220" y="0" width="70" height="20" uuid="4c1d8a7b-d127-444b-bc1c-85881b62721f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Angsana New" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumCost}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="290" y="0" width="60" height="20" uuid="3bed0f30-5c0e-47a0-9ba4-acd9461dacf3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumBVLast}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="500" y="0" width="60" height="20" uuid="5f0e7948-67c4-482f-9df3-9898734cc447"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumAccDepLast}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="560" y="0" width="60" height="20" uuid="cbda1edb-59e5-4198-b465-8b941ab2b2b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumDepPerMn}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="620" y="0" width="60" height="20" uuid="c65f6eaf-88ca-4e87-814c-85f8ea72c9cb"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{accDepCur}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="680" y="0" width="60" height="20" uuid="3329dbad-0f27-4b08-ab56-640413c8f18b"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{accDepAll}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="740" y="0" width="60" height="20" uuid="f263c6be-b300-41fb-87f2-367ac5d76a19"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="AngsanaUPC" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumBVcur}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

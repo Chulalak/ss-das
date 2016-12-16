@@ -1,0 +1,81 @@
+<section id="main-content">
+    <section class="wrapper">
+      <!--===========================breadcrumb================================-->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-book"></i> ลงทะเบียนครุภัณฑ์</h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="Home">หน้าแรก</a></li>
+                    <li><i class="fa fa-briefcase"></i><a href="Home">จัดการครุภัณฑ์</a></li>
+                    <li><i class="fa fa-book"></i>ลงทะเบียนครุภัณฑ์</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                       ลงทะเบียนเข้าใช้งาน
+                    </header>
+                    <div class="panel-body">                       
+                        <form method="post" id="addUser" style="font-size: 15px;padding-left: 20px">
+                            <div class="col-md-12 form-group" style="text-align: left;">
+                                <a class="btn btn-info btn-md" id="btnBack"  type="button" href="javascript:window.history.go(-1);"><span><i class="fa fa-arrow-left"></i></span> กลับ </a>
+                                <button class="btn btn-success btn-md" id="btnSave"  type="submit"><span><i class="fa fa-floppy-o"></i></span> บันทึก </button>
+                            </div>&nbsp;
+                            <table style="margin-left: 20px">
+                                <tbody class="form-group">
+                                    <tr>
+                                        <td width="125"style="text-align: right";> &nbsp;ชื่อผู้ใช้ <span class="required">*</span></td>
+                                        <td width="500">
+                                            <input class="form-control" name="txtUsername" type="text" id="txtUsername" size="20" style="margin-left: 20px;margin-top: 10px;width: 70%;" value="" required="required">
+                                        </td>
+                                    </tr>&nbsp;
+                                    <tr>
+                                        <td style="text-align: right"> &nbsp;รหัสผ่าน <span class="required">*</span></td>
+                                        <td><input class="form-control" name="txtPassword" type="password" id="txtPassword" style="margin-left: 20px;margin-top: 10px;width: 70%;" required="required">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right"> &nbsp;ยืนยันรหัสผ่าน <span class="required">*</span></td>
+                                        <td><input class="form-control" name="txtConPassword" type="password" id="txtConPassword" style="margin-left: 20px;margin-top: 10px;width: 70%;" required="required">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right">&nbsp;ชื่อ <span class="required">*</span></td>
+                                        <td><input class="form-control" name="txtFName" type="text" id="txtFName" style="margin-left: 20px;margin-top: 10px;width: 70%;" required="required"></td>
+                                    </tr>
+                                     <tr>
+                                        <td style="text-align: right">&nbsp;นามสกุล <span class="required">*</span></td>
+                                        <td><input class="form-control" name="txtLName" type="text" id="txtLName" style="margin-left: 20px;margin-top: 10px;width: 70%;" required="required"></td>
+                                    </tr>
+                                     <tr>
+                                        <td style="text-align: right">&nbsp;อีเมล <span class="required">*</span></td>
+                                        <td><input class="form-control" name="txtEmail" type="email" id="txtEmail" style="margin-left: 20px;margin-top: 10px;width: 70%" required="required"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right"> &nbsp;สถานะ</td>
+                                        <td>
+                                            <select class="form-control" name="ddlStatus" id="ddlStatus" style="margin-left: 20px;margin-top: 10px;width: 70%;">
+                                                <option value="" disabled selected hidden></option>
+                                                <option value="admin">admin</option>
+                                                <option value="accountant">accountant</option>
+                                                <option value="other">others</option>
+                                          </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>&nbsp;
+                            
+                        </form>&nbsp;
+                    </div>
+                </section>
+            </div>
+        </div>                 
+    </section>
+        
+</section>
+</section>
+
+
+
