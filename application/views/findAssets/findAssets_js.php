@@ -26,6 +26,9 @@
         $(function() {
             /* global setting */
             var datepickersOpt = {
+                changeYear: true,
+                changeMonth: true,
+                showButtonPanel: true,
                 dateFormat: 'yy-mm-dd'
             };
             
@@ -73,33 +76,36 @@
         if(checkRequiredCriteria()){
             var company_code = $('#company').val();
             var cate_code = $('#catetory').val();
+            var dateFrom = $('#deliveryDateFrom').val();
+            var dateTo = $('#deliveryDateTo').val();
             var status = $('#status').val();
 
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>" + "FindAssets/search",
                 dataType: 'json',
-                data: {company: company_code, cate: cate_code, status: status},
+                data: { company: company_code, 
+                        cate: cate_code, 
+                        dateFrom: dateFrom,
+                        dateTo: dateTo,
+                        status: status},
                 success: function(res) {
                     var count = Object.keys(res).length;                  
                     if(count > 0){                    
-                        insertInrow(res);
+                        table.clear();
+                        $.each(res, function(i, item){
+                            var manage = '<button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;" onclick="doView('+item.DurableId+')"><span class="glyphicon glyphicon-pencil"></span></button>'+
+                                         '<button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;" onclick="deleteData('+item.DurableId+')"><span class="glyphicon glyphicon-trash"></span></button>';
+                            var status = '';
+                            table.row.add([item.DurableId,item.DurableType,item.DurableName,item.DeliveryDate,item.Amount,format(item.UnitPrice),
+                                       format(item.TotalPrice),item.ACC,status,manage]);
+                            table.draw();
+                        });
                     }else{
                         vdialog.alert('ไม่มีข้อมูลแสดง.');
                     }
                 }
             });
-            function insertInrow(res){
-                table.clear();
-                $.each(res, function(i, item){
-                    var manage = '<button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;" onclick="doView('+item.DurableId+')"><span class="glyphicon glyphicon-pencil"></span></button>'+
-                                 '<button type="button" class="tabledit-edit-button btn btn-sm btn-default" style="float: none;" onclick="deleteData('+item.DurableId+')"><span class="glyphicon glyphicon-trash"></span></button>';
-                    var status = '';
-                    table.row.add([item.DurableId,item.DurableType,item.DurableName,item.DeliveryDate,item.Amount,format(item.UnitPrice),
-                               format(item.TotalPrice),item.ACC,status,manage]);
-                    table.draw();
-                });
-            }
         }
     });
 
@@ -116,35 +122,13 @@
     }
     
     function format(number) {
-        var decimalSeparator = ".";
-        var thousandSeparator = ",";
-
-        // make sure we have a string
-        var result = String(number);
-
-        // split the number in the integer and decimals, if any
-        var parts = result.split(decimalSeparator);
-
-        // if we don't have decimals, add .00
-        if (!parts[1]) {
-          parts[1] = "00";
-        }
-
-        // reverse the string (1719 becomes 9171)
-        result = parts[0].split("").reverse().join("");
-
-        // add thousand separator each 3 characters, except at the end of the string
-        result = result.replace(/(\d{3}(?!$))/g, "$1" + thousandSeparator);
-
-        // reverse back the integer and replace the original integer
-        parts[0] = result.split("").reverse().join("");
-
-        // recombine integer with decimals
-        return parts.join(decimalSeparator);
+       return  accounting.formatMoney(number, { 
+                format: "%v"
+                });
     }
     
     function deleteData(id){
-        vdialog.confirm('ต้องการลบข้อมูลนี้หรือไม่', function(){           
+        vdialog.confirm('ต้องการลบข้อมูลนี้หรือไม่?', function(){           
             $.ajax({
                 "url": "<?php echo base_url(); ?>" + "FindAssets/deleteData",
                 "type": 'POST', 
@@ -163,20 +147,7 @@
     }
     
     function doView(id){
-//        $.ajax({
-//            "url": "<?php echo base_url(); ?>" + "AddAssets",
-//            "type": 'POST', 
-//            "data": {
-//                "id": id,"action": "edit"
-//            },
-//            "success": function(res){    
-////               window.location.href="AddAssets";
-//            },
-//            "error": function(err){
-//                vdialog.alert('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.' + err);
-//            }
-//        });
-             window.location.href = "<?php echo base_url(); ?>" + "AddAssets/editData?id="+id;
+        window.location.href = "<?php echo base_url(); ?>" + "AddAssets/editData?id="+id;
     }
     </script>
   </body>

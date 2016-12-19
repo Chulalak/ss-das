@@ -12,8 +12,6 @@
   <script src="<?php echo base_url(); ?>assets/js/jquery.customSelect.min.js" ></script>
   <!--custome script for all page-->
   <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script>
-  <!--Datatable-->
-  <script src="<?php echo base_url(); ?>assets/DataTables/extension/Editor/js/dataTables.editor.min.js"></script>
   <!--moment-->
   <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
 

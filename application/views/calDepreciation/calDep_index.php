@@ -3,10 +3,10 @@
     <!--===========================breadcrumb================================-->
     <div class="row">
       <div class="col-lg-12">
-        <h3 class="page-header"><i class="fa fa-laptop"></i> คำนวณค่าเสื่อมราคา</h3>
+        <h3 class="page-header"><span class="icon_calulator"></span> คำนวณค่าเสื่อมราคา</h3>
         <ol class="breadcrumb">
           <li><i class="fa fa-home"></i><a href="Home">หน้าแรก</a></li>
-          <li><i class="fa fa-usd"></i>คำนวณค่าเสื่อมราคา</li>
+          <li><span class="icon_calulator"></span>คำนวณค่าเสื่อมราคา</li>
         </ol>
       </div>
     </div>
@@ -99,7 +99,7 @@
                                   <th>BVปีปัจจุบัน</th>
                                 </tr>
                               </thead>
-<!--                              <tfoot style="background-color: #71B225;color: black;">
+                              <tfoot style="background-color: #71B225;color: black;">
                                 <tr>
                                   <td></td>
                                   <td></td>
@@ -117,7 +117,7 @@
                                   <td></td>
                                   <td border-bottom: 2px></td>
                                 </tr>
-                              </tfoot>-->
+                              </tfoot>
                             </table>
                         </fieldset>
                         <fieldset>
@@ -127,7 +127,9 @@
                                 <tbody>
                                     <tr>
                                         <td>ค่าเสื่อมราคารวมต่อเดือน</td>
-                                        <td><input type="text" id="allDepPerMonth" class="form-control"></td>
+                                        <td><input type="text" id="allDepPerMonth" class="form-control" style="margin-left: 5px"></td>
+                                        <td></td>
+                                        <td><input type="hidden" id="hdrId" class="form-control"></td>
                                     </tr>
                                 </tbody>
                             </table>

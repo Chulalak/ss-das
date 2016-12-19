@@ -16,15 +16,14 @@ class GenerateReport extends CI_Controller {
         
 //        echo $company;
 //        die();
-         //XXX setting connect database
+        //XXX setting connect database
         $CI = &get_instance();
         $CI->load->database();
         $server = $CI->db->hostname;
         $user = $CI->db->username;
         $pass = $CI->db->password;
         $db = $CI->db->database;
-//
-//XXX retrive value from view into array for add parameter for report
+        //XXX retrive value from view into array for add parameter for report
 
         $param = array(
             "company" => $this->input->post('company'),

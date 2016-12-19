@@ -4,7 +4,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
             <li class="active">
-                <a class="" href="">
+                <a class="" href="<?php echo base_url(); ?>Home">
                     <i class="icon_house_alt"></i>
                     <span>หน้าแรก</span>
                 </a>
@@ -39,7 +39,7 @@
                     <span class="menu-arrow arrow_carrot-right"></span>
                 </a>
                 <ul class="sub">
-                    <li><a class="" href="">รายงานข้อมูลครุภัณฑ์</a></li>
+<!--                    <li><a class="" href="">รายงานข้อมูลครุภัณฑ์</a></li>-->
                     <li><a class="" href="<?php echo base_url(); ?>DepreciationReport">รายงานค่าเสื่อมราคา</a></li>
                 </ul>
             </li>

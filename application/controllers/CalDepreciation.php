@@ -7,7 +7,8 @@ class CalDepreciation extends CI_Controller
        if(empty($this->session->userdata("username"))){
             redirect('Login', 'refresh');
         } 
-      $this->load->model('CalDep_model');
+        $this->load->library('session');
+        $this->load->model('CalDep_model');
     }
     public function index(){
         //XX Query company from table for company dropdown
@@ -38,11 +39,9 @@ class CalDepreciation extends CI_Controller
         $company = $this->input->post('company');
         $cate = $this->input->post('cate');
         $month = $this->input->post('month');
-        $monthfinal = $this->input->post('month')== 1 ? 12 : $month-1;
         $year = $this->input->post('year');
-        $yearfinal = $month==1 ? $year-1 : $year;
 
-        $data = $this->CalDep_model->calDepreciation($company,$cate,$monthfinal,$yearfinal);
+        $data = $this->CalDep_model->calDepreciation($company,$cate,$month,$year);
         echo json_encode($data);
     }
     
@@ -81,36 +80,37 @@ class CalDepreciation extends CI_Controller
             
             $hdr = $results;
             foreach ($hdr as $value) {
-               $this->_hdrId =  $value['DPHHDR'];
+                $hdrId = $value['DPHHDR'];
+                
+                $this->session->set_userdata(array('hdrId'=> $hdrId));
             }
             
         }
         
         echo json_encode($results);
+        
+        return $this->_hdrId;
     }
     
-    public function getHeaderId($data) {
-        //XXX Get DPHHDR 
-        $this->db->select('DPHHDR');
-        $this->db->from('DEPHEADER');
-        $this->db->where($data);
-        $result = $this->db->get();
-        $results = $result->result_array();
-
-        $hdr = $results;
-        foreach ($hdr as $value) {
-           $hdrId =  $value['DPHHDR'];
-        }
-        return $hdrId;
-    }
+//    public function getHeaderId($data) {
+//        //XXX Get DPHHDR 
+//        $this->db->select('DPHHDR');
+//        $this->db->from('DEPHEADER');
+//        $this->db->where($data);
+//        $result = $this->db->get();
+//        $results = $result->result_array();
+//
+//        $hdr = $results;
+//        foreach ($hdr as $value) {
+//           $hdrId =  $value['DPHHDR'];
+//        }
+//        return $hdrId;
+//    }
     
     public function save() {
-        echo $this->_hdrId;
-        die();
-//        $headerId = $this->_hdrId;
-//        echo $headerId;
-//        die();
-        $user = $this->session->userdata('username');
+
+        $headerId   = $this->session->userdata('hdrId');
+        $user       = $this->session->userdata('username');
         header('Content-Type:application/json');
         $data = json_decode(file_get_contents('php://input'), true);
         if (is_array($data) || is_object($data)){
@@ -135,13 +135,28 @@ class CalDepreciation extends CI_Controller
                             "DEPCREUSR" => $user,
                             "DEPUPDUSR" => $user
                         );
-                        $insert = $this->db->insert('depdetail', $rs);
-                        
+                        $insert = $this->db->insert('depdetail', $rs);     
                         
                 }
             }
         }
-
+        $this->session->unset_userdata('hdrId');
         echo $insert;
+    }
+    
+    public function updateSum() {
+        $hdrId = $this->input->post('hdrId');
+        $sumDep = $this->input->post('sumDep');
+        $user       = $this->session->userdata('username');
+        
+        $array = array(
+            "DPHSUMDEP" => $sumDep,
+            "DPHUPDUSR" => $user
+        );
+        
+        $this->db->where('DPHHDR', $hdrId);
+        $data = $this->db->update('depheader', $array);
+        
+        echo $data;
     }
 }

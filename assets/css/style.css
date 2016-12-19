@@ -1836,11 +1836,11 @@ div[data-role="editor-toolbar"] {
 
   width: 100px;
 
-  float: left;
+  float: center;
 
   text-align: center;
 
-  margin-right: 20px;
+  margin: 0 auto;
 
   padding-right: 20px;
 
@@ -1850,9 +1850,11 @@ div[data-role="editor-toolbar"] {
 
 .info-box .count {
 
-  margin-top: 20px;
+  margin: 0 auto;
+  
+  text-align: center;
 
-  font-size: 34px;
+  font-size: 20px;
 
   font-weight: 700;
 
@@ -1860,7 +1862,7 @@ div[data-role="editor-toolbar"] {
 
 .info-box .title {
 
-  font-size: 12px;
+  font-size: 16px;
 
   text-transform: uppercase;
 

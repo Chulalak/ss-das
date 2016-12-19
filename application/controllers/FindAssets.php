@@ -20,12 +20,21 @@ class FindAssets extends CI_Controller
   }
 
     public function search(){
-      $company = $this->input->post('company');
-      $cate = $this->input->post('cate');
-      $status = $this->input->post('status');
-
-      $data = $this->FindAssets_model->search($company);
-      echo json_encode($data);
+        $company = $this->input->post('company');
+        $dateFrom = $this->input->post('dateFrom');
+        $dateTo = $this->input->post('dateTo');
+        $cate = $this->input->post('cate');
+        $status = $this->input->post('status');
+        
+        if (empty($dateFrom)){ $dateFrom   = 'null'; }
+        if (empty($dateTo)){ $dateTo   = 'null'; }
+        if (empty($cate)){ $cate   = 'null'; }
+        if (empty($status)){ $status   = 'null'; }
+      
+//        var_dump($dateFrom , $dateTo ,$cate , $status);
+//        die();
+        $data = $this->FindAssets_model->search($company,$cate,$dateFrom,$dateTo,$status);
+        echo json_encode($data);
     }
   
     public function deleteData() {

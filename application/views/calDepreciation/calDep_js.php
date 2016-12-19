@@ -24,6 +24,7 @@
 <script src="<?php echo base_url(); ?>assets/js/accounting.min.js"></script>
 
 <script type="text/javascript">
+    var hdrId = $('#hdrId').val()
     //XXX Jquery for sum function in Datatable 
     /* Ex. 
      *      var t = $('#table').DataTable();
@@ -51,7 +52,7 @@
             $("#allDepPerMonth").css("background-color", "yellow");
             $("#allDepPerMonth").css("font-weight", "bold");
             $("#allDepPerMonth").css("color", "black");
-            console.log(result);
+//            console.log(result);
     }
     
     /******* *set datepicker format year only* ********/
@@ -93,67 +94,67 @@
             { bSortable: true,"sClass":"alignRight", "sWidth": "", "aTargets": [12] },
             { bSortable: true,"sClass":"alignRight", "sWidth": "", "aTargets": [13] },
             { bSortable: true,"sClass":"alignRight", "sWidth": "", "aTargets": [14] }
-        ]//,
-//        "footerCallback": function ( row, data, start, end, display ) {
-////            var data = $('#calDept').DataTable.$('input, select').serialize();
-//            var api = this.api(), data;
-//            // Remove the formatting to get integer data for summation
-//            var intVal = function ( i ) {
-//                return typeof i === 'string' ?
-//                    i.replace(/[\$,]/g, '')*1 :
-//                    typeof i === 'number' ?
-//                        i : 0;
-//            };
-//            function number_format(x) {
-//                var num = Number(x).toFixed(2);
-//                var string = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//                
-//                return string;
-//            };
-//
-//            //XXX ราคาทุนรวม
-//            total = api.column( 4 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 4 ).footer() ).html(number_format(total));
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 6 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 6 ).footer() ).html(number_format(total));
-//           
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 10 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 10 ).footer() ).html(number_format(total));
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 11 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 11 ).footer() ).html(number_format(total));
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 12 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 12 ).footer() ).html(number_format(total));
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 13 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 13 ).footer() ).html(number_format(total));
-//            
-//            //XXX BV ยกมา
-//            total = api.column( 14 ).data().reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//            }, 0 );
-//            $( api.column( 14 ).footer() ).html(number_format(total));
-//        }
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+//            var data = $('#calDept').DataTable.$('input, select').serialize();
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            function number_format(x) {
+                var num = Number(x).toFixed(2);
+                var string = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                
+                return string;
+            };
+
+            //XXX ราคาทุนรวม
+            total = api.column( 4 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 4 ).footer() ).html(number_format(total));
+            
+            //XXX BV ยกมา
+            total = api.column( 6 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 6 ).footer() ).html(number_format(total));
+           
+            
+            //XXX BV ยกมา
+            total = api.column( 10 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 10 ).footer() ).html(number_format(total));
+            
+            //XXX BV ยกมา
+            total = api.column( 11 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 11 ).footer() ).html(number_format(total));
+            
+            //XXX BV ยกมา
+            total = api.column( 12 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 12 ).footer() ).html(number_format(total));
+            
+            //XXX BV ยกมา
+            total = api.column( 13 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 13 ).footer() ).html(number_format(total));
+            
+            //XXX BV ยกมา
+            total = api.column( 14 ).data().reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+            }, 0 );
+            $( api.column( 14 ).footer() ).html(number_format(total));
+        }
     });
         
     
@@ -179,13 +180,16 @@
                     if(count > 0){
                         table.clear();                  // clear data before add to table
                         $.each(response, function(i, item){
+                            $('#hdrId').val(item.DPHHDR);
+                            $("#allDepPerMonth").val(format(item.DPHSUMDEP));
+                            $("#allDepPerMonth").css("background-color", "yellow");
+                            $("#allDepPerMonth").css("font-weight", "bold");
+                            $("#allDepPerMonth").css("color", "black");
                             table.row.add([item.DRAID,item.DRANAME,item.DRAAMT,item.DEPDAT,format(item.DEPLASTCST),
                                        item.DRADEPRT,format(item.DEPLASTBV),item.DEPLASTMNT,item.DEPCURMNT,item.DEPALLMNT,
                                        format(item.DEPACCDEPLAST), format(item.DEPDEPPERMNT),format(item.DEPACCDEPCUR),format(item.DEPACCDEPALL),format(item.DEPBVCUR)]);
                             table.draw();                           
                         });   
-                       // set value into text field to find all depreciation of month 
-                       getAllDep();
                     }else{
                         vdialog.alert('ไม่มีข้อมูลแสดง กรุณาตรวจสอบข้อมูล.');
                     }
@@ -262,7 +266,7 @@
     //XXX When click save button
     $('#btnSave').click(function(e) {
         var size = table.data().length;
-        console.log(size);
+//        console.log(size);
         var param = "{ \"data\": [";
         table.data().each( function ( value, index ) {
             var month       = $('#month').val();
@@ -291,44 +295,63 @@
             
              param = param + str;       
         });  
-        console.log(param);
-        
-        $.ajax({
-            url: "<?php echo base_url(); ?>" + "index.php/CalDepreciation/prepareSave",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                //XX parameter of prepare save for check duplicate.
-                "company": $('#company').val(),
-                "cate": $('#catetory').val(),
-                "month": $('#month').val(),
-                "year": $('#year').val(),
-                "sumDep": $('#allDepPerMonth').val().replace(",","")
-            },
-            "success": function(response){
-                // check length of response from ajax
-                var count = Object.keys(response).length; 
-                console.log(count);
-                if(count == 1){
-                    $.ajax({
-                        url: "<?php echo base_url(); ?>" + "index.php/CalDepreciation/save",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: param,
-                        "success": function(response){
-                            if(response == "1"){
-                                vdialog.success('บันทึกเรียบร้อยแล้ว.',function(event){
-                                    window.location.reload;
-                                });
+//        console.log(param);
+        if(hdrId == ""){
+            $.ajax({
+                url: "<?php echo base_url(); ?>" + "CalDepreciation/prepareSave",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    //XX parameter of prepare save for check duplicate.
+                    "company": $('#company').val(),
+                    "cate": $('#catetory').val(),
+                    "month": $('#month').val(),
+                    "year": $('#year').val(),
+                    "sumDep": $('#allDepPerMonth').val().replace(",","")
+                },
+                "success": function(response){
+                    // check length of response from ajax
+                    var count = Object.keys(response).length; 
+    //                console.log(count);
+                    if(count == 1){
+                        $.ajax({
+                            url: "<?php echo base_url(); ?>" + "CalDepreciation/save",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: param,
+                            "success": function(response){
+                                if(response == "1"){
+                                    vdialog.success('บันทึกเรียบร้อยแล้ว.',function(event){
+                                        window.location.reload;
+                                    });
+                                }
                             }
-                        }
-                    });
-                }else{
-                    vdialog.alert('คำนวณข้อมูลของเดือนนี้แล้ว กรุณาเลือกเดือนใหม่ หรือค้นหาข้อมูลได้จากปุ่มค้นหา.');
+                        });
+                    }else{
+                        vdialog.alert('คำนวณข้อมูลของเดือนนี้แล้ว กรุณาเลือกเดือนใหม่ หรือค้นหาข้อมูลได้จากปุ่มค้นหา.');
+                    }
                 }
-            }
-        });
-        
+            });
+        }else{
+            $.ajax({
+                url: "<?php echo base_url(); ?>" + "CalDepreciation/updateSum",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "hdrId"  : hdrId,
+                    "sumDep" : $("#allDepPerMonth").val().replace(",","")
+                },
+                "success": function(response){
+                    if(response == "1"){
+                        vdialog.success('อัพเดตเรียบร้อยแล้ว.',function(event){
+                            window.location.reload;
+                        });
+                    }
+                },"error" : function(err){
+                    vdialog.error("พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.");
+                }
+            });
+        }      
     });
     
     /********* *function for get value in input tag using substring* ***********/
