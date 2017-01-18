@@ -63,14 +63,15 @@
                                 echo '<a href="Login"><span class="username"> ลงชื่อเข้าสู่ระบบ</span></a>';
                             }else{
                                  $username = $this->session->userdata('username');
-                                echo'<span class="username"> ยินดีต้อนรับ  : : '.$username. '</span>';
+                                echo'<span class="username"> ยินดีต้อนรับ  :    '.$username. '</span>';
                                 echo '<b class="caret"></b>';
-                            }  
+                             } 
                            ?>
                             
                        </a>
                        <ul class="dropdown-menu extended logout">
-                           <li>                            
+                           <li> 
+                               <a href="<?php echo base_url();?>Profile"><i class="fa fa-user"></i> แก้ไขข้อมูลส่วนตัว </a> 
                                <a href="<?php echo base_url();?>Login/logout"><i class="fa fa-sign-out"></i> ออกจากระบบ</a>
                            </li>
 

@@ -1,28 +1,20 @@
 <section id="main-content">
     <section class="wrapper">
-      <!--===========================breadcrumb================================-->
+
         <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-book"></i> ลงทะเบียนครุภัณฑ์</h3>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="Home">หน้าแรก</a></li>
-                    <li><i class="fa fa-briefcase"></i><a href="Home">จัดการครุภัณฑ์</a></li>
-                    <li><i class="fa fa-book"></i>ลงทะเบียนครุภัณฑ์</li>
-                </ol>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <section class="panel">
                     <header class="panel-heading">
                        ลงทะเบียนเข้าใช้งาน
                     </header>
                     <div class="panel-body">                       
                         <form class="form-inline" method="post" id="register_form" style="font-size: 15px;padding-left: 20px">
+                            <!-- ******  div for button ****** -->
                             <div class="col-md-12 form-group" style="text-align: left;">
                                 <a class="btn btn-info btn-md" id="btnBack"  type="button" href="javascript:window.history.go(-1);"><span><i class="fa fa-arrow-left"></i></span> กลับ </a>
                                 <button class="btn btn-success btn-md" id="btnSave"  type="submit"><span><i class="fa fa-floppy-o"></i></span> บันทึก </button>
                             </div>&nbsp;
+                            <!-- ******* register form ****** -->
                             <table style="margin-left: 20px">
                                 <tbody>
                                     <tr>

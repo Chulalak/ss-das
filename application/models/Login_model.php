@@ -8,8 +8,9 @@ class Login_model extends CI_Model
     
     public function authen($username,$password) {
         $query = $this->db->get_where('USER', array('USRNAME' => $username, 'USRPASS' => $password));
-
-        return $query->num_rows();
+        //produces: 
+        //  SELECT * FROM user WHERE usrname = $username and usrpass = $password
+        return $query;
 
     }
 }

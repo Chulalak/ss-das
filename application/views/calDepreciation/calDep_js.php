@@ -160,6 +160,7 @@
     
     //XXX When click search button
     $('#btnSearch').click(function(e) {
+        $hdrId = "";
         // validate criteria
         if(checkRequiredCriteria()){  
             // send ajax to controller CalDepreciation method search
@@ -201,38 +202,44 @@
   
     //XXX When click calculate button
     $('#btnCal').click(function(e) {
-        if(checkRequiredCriteria()){  
-            // send ajax to controller CalDepreciation method calculate
-            $.ajax({
-                "url": "<?php echo base_url(); ?>" + "CalDepreciation/calculate",
-                "type": 'POST',
-                "dataType": 'json',
-                "data": {
-                    "company": $('#company').val(),
-                    "cate": $('#catetory').val(),
-                    "month": $('#month').val(),
-                    "year": $('#year').val()
-                },
-                "success": function(response){
-                    // check length of response from ajax
-                    var count = Object.keys(response).length;                  
-                    if(count > 0){
-                        table.clear();                    // clear data before add to table
-                        $.each(response, function(i, item){
-                            var CurrentMonth = '<input type="text" id="curMonth" class="form-control" value="'+item.CurrentMonth+'" style="text-align: center;"readonly="readonly">';
-                            table.row.add([ item.ID,item.Name,item.Amount,item.DeliveryDate,format(item.Cost),
-                                            item.DepRate,format(item.LastBV),item.LastMonths,CurrentMonth,item.AllMonths,
-                                            format(item.LastDepAcc), format(item.depPerMonth),format(item.CurrentDepAcc),format(item.DepAccAll),format(item.DepBVCurrent)]);
-                            table.draw();
-                        });
-                        // set value into text field to find all depreciation of month 
-                        getAllDep();
-                    }else{
-                        vdialog.alert('ไม่มีข้อมูลแสดง กรุณาตรวจสอบข้อมูล.');
+        var hdrId = $('#hdrId').val();
+        if(hdrId != ""){
+            vdialog.alert('คำนวณข้อมูลของเดือนนี้แล้ว กรุณาเลือกเดือนใหม่ หรือค้นหาข้อมูลได้จากปุ่มค้นหา.');
+        }else{
+            if(checkRequiredCriteria()){  
+                // send ajax to controller CalDepreciation method calculate
+                $.ajax({
+                    "url": "<?php echo base_url(); ?>" + "CalDepreciation/calculate",
+                    "type": 'POST',
+                    "dataType": 'json',
+                    "data": {
+                        "company": $('#company').val(),
+                        "cate": $('#catetory').val(),
+                        "month": $('#month').val(),
+                        "year": $('#year').val()
+                    },
+                    "success": function(response){
+                        // check length of response from ajax
+                        var count = Object.keys(response).length;                  
+                        if(count > 0){
+                            table.clear();                    // clear data before add to table
+                            $.each(response, function(i, item){
+                                var CurrentMonth = '<input type="text" id="curMonth" class="form-control" value="'+item.CurrentMonth+'" style="text-align: center;"readonly="readonly">';
+                                table.row.add([ item.ID,item.Name,item.Amount,item.DeliveryDate,format(item.Cost),
+                                                item.DepRate,format(item.LastBV),item.LastMonths,CurrentMonth,item.AllMonths,
+                                                format(item.LastDepAcc), format(item.depPerMonth),format(item.CurrentDepAcc),format(item.DepAccAll),format(item.DepBVCurrent)]);
+                                table.draw();
+                            });
+                            // set value into text field to find all depreciation of month 
+                            getAllDep();
+                        }else{
+                            vdialog.alert('ไม่มีข้อมูลแสดง กรุณาตรวจสอบข้อมูล.');
+                        }
                     }
-                }
-            });
+                });
+            }
         }
+
     });
 
  
@@ -265,6 +272,7 @@
     
     //XXX When click save button
     $('#btnSave').click(function(e) {
+        var hdrId = $('#hdrId').val();
         var size = table.data().length;
 //        console.log(size);
         var param = "{ \"data\": [";
@@ -295,8 +303,9 @@
             
              param = param + str;       
         });  
-//        console.log(param);
+        
         if(hdrId == ""){
+            console.log('hdrId is null');
             $.ajax({
                 url: "<?php echo base_url(); ?>" + "CalDepreciation/prepareSave",
                 type: 'POST',
@@ -333,16 +342,17 @@
                 }
             });
         }else{
+        console.log('hdrId have data');
             $.ajax({
                 url: "<?php echo base_url(); ?>" + "CalDepreciation/updateSum",
                 type: 'POST',
-                dataType: 'json',
+                dataType: 'text',
                 data: {
                     "hdrId"  : hdrId,
                     "sumDep" : $("#allDepPerMonth").val().replace(",","")
                 },
                 "success": function(response){
-                    if(response == "1"){
+                    if(response == "success"){
                         vdialog.success('อัพเดตเรียบร้อยแล้ว.',function(event){
                             window.location.reload;
                         });

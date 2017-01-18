@@ -18,6 +18,3 @@ class Home extends CI_Controller {
             $this->load->view('template/javascript');
     }
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */

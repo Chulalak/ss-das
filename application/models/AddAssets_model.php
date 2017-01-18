@@ -6,7 +6,9 @@ class AddAssets_model extends CI_Model {
         parent::__construct();
     }
     
-    
+    /*
+     * function for get durable articles information from database
+     */    
     public function getData($id) {
         $rs = $this->db->query("SELECT DUR.DRAID AS 'DurableId'
                                       ,DUR.CMPCD AS 'company'
@@ -17,6 +19,7 @@ class AddAssets_model extends CI_Model {
                                       ,DUR.DRAAMT AS 'Amount'
                                       ,DUR.DRAUNTPRC AS 'UnitPrice'
                                       ,DUR.DRATOTPRC AS 'TotalPrice'
+                                      ,DUR.DRAREF AS 'RefNum'
                                       ,DUR.DRAACC AS 'ACC'
                                       ,DUR.DRASTAT AS 'Status'
                                 FROM DURABLEARTICLES DUR 
@@ -28,31 +31,87 @@ class AddAssets_model extends CI_Model {
         return $query;
     }
     
-    
+    /*
+     * function for get 'draid' from database 
+     */    
     public function prepareForSaveToDepTable($param) {
         
-        $this->db->select('DRAID');
-        $this->db->from('depdetail');
-        $this->db->where($param);
-        $query = $this->db->get(); 
-        if ( $query->num_rows() > 0 )
-        {
-            $row = $query->row_array();
-            return $row;
+        $query = $this->db->query("SELECT draid  FROM durablearticles ORDER BY draupddat DESC LIMIT 1");
 
-        }
+        return $query;
     }
     
+    /*
+     * function for add depreciation information into database
+     * if $deliveryDate is less than 15 then set DEPLASTMNT,DEPALLMNT = 1 and calulating depreciation per month and current balance value
+     * if $deliveryDate is more than 15 or equal to 15 then set DEPLASTMNT,DEPALLMNT,DEPDEPPERMNT,DEPACCDEPCUR,DEPACCDEPALL,DEPACCDEPALL,DEPBVCUR = 0
+     */    
     public function insertDepreciation($id,$deliveryDate,$cost,$depRate,$user) {
-        $rs = $this->db->query("INSERT INTO depdetail(
-                                            DRAID, DEPDAT, DEPLASTCST, DEPLASTBV, DEPLASTMNT, 
-                                            DEPCURMNT, DEPYEAR, DEPALLMNT, DEPACCDEPLAST, DEPDEPPERMNT, 
-                                            DEPACCDEPCUR, DEPACCDEPALL, DEPBVCUR, DEPCREDAT, DEPCREUSR, 
-                                            DEPUPDDAT, DEPUPDUSR) 
-                                VALUES ($id,'$deliveryDate',$cost,0.00,0,
-                                        1,YEAR(CURRENT_DATE),1+0,0.00,round((($cost*$depRate)/100)/12),
-                                        round((($cost*$depRate)/100)/12)*1, round((($cost*$depRate)/100)/12)*1, $cost - (round((($cost*$depRate)/100)/12)),CURRENT_TIMESTAMP,'$user',
-                                        CURRENT_TIMESTAMP,'$user')");
+        $this->db->query("INSERT INTO depdetail(
+                                            DRAID, 
+                                            DEPDAT, 
+                                            DEPLASTCST, 
+                                            DEPLASTBV, 
+                                            DEPLASTMNT, 
+                                            DEPCURMNT,
+                                            DEPMNT, 
+                                            DEPYEAR, 
+                                            DEPALLMNT, 
+                                            DEPACCDEPLAST, 
+                                            DEPDEPPERMNT, 
+                                            DEPACCDEPCUR, 
+                                            DEPACCDEPALL, 
+                                            DEPBVCUR, 
+                                            DEPCREDAT, 
+                                            DEPCREUSR, 
+                                            DEPUPDDAT, 
+                                            DEPUPDUSR) 
+                                VALUES ($id
+                                        ,'$deliveryDate'
+                                        ,$cost
+                                        ,0.00
+                                        ,0
+                                        ,if(DATE('$deliveryDate')<15,1,0)
+                                        ,MONTH('$deliveryDate')
+                                        ,YEAR('$deliveryDate')
+                                        ,if(DATE('$deliveryDate')<15,1,0)
+                                        ,0.00
+                                        ,if(DATE('$deliveryDate')<15,round((($cost*$depRate)/100)/12),0)
+                                        ,if(DATE('$deliveryDate')<15,round((($cost*$depRate)/100)/12),0)
+                                        ,if(DATE('$deliveryDate')<15,round((($cost*$depRate)/100)/12),0)
+                                        , $cost - (if(DATE('$deliveryDate')<15,round((($cost*$depRate)/100)/12),0))
+                                        ,CURRENT_TIMESTAMP
+                                        ,'$user'
+                                        ,CURRENT_TIMESTAMP
+                                        ,'$user')");
+        
+        $query = $this->db->query("SELECT depdtl,depdeppermnt FROM depdetail ORDER BY depupddat DESC LIMIT 1");
+        $rs = $query->result_array();
+        
+        return $rs;
+    }
+    
+    /*
+     * function for check sum of depreciation from 'depheader' table
+     */
+    public function chkSum($company,$type,$deliveryDate) {
+        $rs = $this->db->query("SELECT * FROM depheader "
+                            . "WHERE cmpcd = '$company' AND dphcate = $type "
+                            . "AND dphmnt = MONTH('$deliveryDate') "
+                            . "AND dphyear = YEAR('$deliveryDate')");
+        
+        return $rs;
+    }
+    
+     /*
+     * function for insert sum of depreciation into 'depheader' table
+     */
+    public function insertDepHeadder($company,$type,$deliveryDate,$depPermonth,$user) {
+        $this->db->query("  INSERT INTO depheader(  cmpcd, dphcate, dphmnt, dphyear, dphsumdep, 
+                                                    dphcredat, dphcreusr, dphupddat, dphupdusr) 
+                            VALUES ('$company', $type, MONTH('$deliveryDate'), YEAR('$deliveryDate') , $depPermonth,
+                                    CURRENT_TIMESTAMP,'$user',CURRENT_TIMESTAMP,'$user')");
+        
     }
 
 }

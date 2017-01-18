@@ -14,35 +14,38 @@ class Setting extends CI_Controller {
     public function index() {
         if ($this->input->post('action') == 'edit') {
             //XXX Update company action = 'edit'
-            $arrCompany = array(
+            $arrCompany = [
                 'CMPCD' => $this->input->post('code'),
                 'CMPLNAME'  => $this->input->post('companyName'),
                 'CMPLADDR'  => $this->input->post('address'),
                 'CMPTEL'  => $this->input->post('companyTel'),
                 'CMPFAX'  => $this->input->post('companyFax')
-            );
-            $data['company'] = $this->db->replace('company', $arrCompany);
+            ];
+            $this->db->replace('company', $arrCompany);
             
             //XXX Update category action = 'edit'
-            $arrCategory = ['TBDNO' => $this->input->post('TBDNO'),
-                'TBDCD' => $this->input->post('TBDCD'),
-                'TBDDESC'  => $this->input->post('TBDDESC')
-            ];
-            
-            $data['category'] = $this->db->replace('tabledetail', $arrCategory);
+                $tableNo = $this->input->post('TBDNO');
+                $tableCode = $this->input->post('TBDCD');
+                $tableDesc  = $this->input->post('TBDDESC');
+                $arrCate = [
+                    'TBDNO' => $tableNo,
+                    'TBDCD' => $tableCode
+                ];
+                
+            $this->db->where($arrCate);
+            $this->db->set('TBDDESC', $tableDesc);
+            $this->db->update('tabledetail');
             
             
         } else if ($this->input->post('action') == 'delete') {
             //XXX Update company action = 'delete'
             $companyCode =  $this->input->post('code');  
-            $data['company'] = $this->Setting_model->deleteCompany($companyCode);
+            $this->Setting_model->deleteCompany($companyCode);
             
             //XXX Update category action = 'delete'
-             $arrCategory = [
-                'TBDNO' => $this->input->post('TBDNO'),
-                'TBDCD' => $this->input->post('TBDCD')
-            ];          
-            $data['category'] = $this->db->delete('tabledetail', $arrCategory);
+            $cateCode = $this->input->post('TBDCD');
+            $this->Setting_model->deleteCategory($cateCode);
+//            redirect('Setting', 'refresh');
         }
         
         $data['company'] = $this->Setting_model->searchData();
@@ -51,7 +54,7 @@ class Setting extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/navMenu');
         $this->load->view('setting/setting_index',$data);
-        $this->load->view('setting/setting_js');
+        $this->load->view('setting/setting_js');        
         
     }
     

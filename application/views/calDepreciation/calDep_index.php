@@ -68,7 +68,7 @@
                                     </td>
                                     <td width="125" style="text-align: right"> &nbsp;ปีงบประมาณ <span class="required">*</span></td>
                                     <td width="400">
-                                        <input type="text" class="date-picker-year form-control" id="year" name="year" style="margin-left: 20px;width: 80%" required="true"/>                        
+                                        <input type="text" class="form-control" id="year" name="year" style="margin-left: 20px;width: 80%" required="true"/>                        
                                     </td>
                                 </tr>
                           </tbody>

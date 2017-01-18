@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="http://www.softsquaregroup.com/tsr/show_bug.cgi?id=13044">
+                <a class="" target="_blank" href="http://www.softsquaregroup.com/tsr/show_bug.cgi?id=13044">
                     <i class="fa fa-wrench fa-2x"></i>
                     <span>แจ้งซ่อม</span>
                 </a>
@@ -43,6 +43,7 @@
                     <li><a class="" href="<?php echo base_url(); ?>DepreciationReport">รายงานค่าเสื่อมราคา</a></li>
                 </ul>
             </li>
+            <?php if($this->session->userdata("role")== "admin"){ ?>
             <li class="sub-menu">
                 <a href="javascript:;" class="">
                     <i class="fa fa-cog fa-2x"></i>
@@ -50,10 +51,11 @@
                     <span class="menu-arrow arrow_carrot-right"></span>
                 </a>
                 <ul class="sub">
-                    <li><a class="" href="<?php echo base_url(); ?>ManageUser">จัดการผู้ใช้</a></li>
-                    <li><a class="" href="<?php echo base_url(); ?>Setting">จัดการทั่วไป</a></li>
+                    <li><a class="" href="<?php echo base_url(); ?>ManageUser">ตั้งค่าผู้ใช้</a></li>
+                    <li><a class="" href="<?php echo base_url(); ?>Setting">ตั้งค่าทั่วไป</a></li>
                 </ul>
             </li>
+            <?php } ?>
         </ul>
         <!-- sidebar menu end-->
     </div>

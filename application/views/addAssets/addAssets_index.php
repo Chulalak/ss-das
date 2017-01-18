@@ -22,7 +22,7 @@
                         <form class="form-inline" method="post" id="addAssets">                            
                             <div class="container">
                                 <div class="col-md-12 form-group" style="text-align: left;">
-                                    <a class="btn btn-info btn-md" id="btnBack" type="button" href="javascript:window.history.go(-1);"><span><i class="fa fa-arrow-left"></i></span> กลับ </a>
+                                    <a class="btn btn-info btn-md" id="btnBack" type="button" href="<?php echo base_url(); ?>FindAssets"><span><i class="fa fa-arrow-left"></i></span> กลับ </a>
                                     <button class="btn btn-success btn-md" id="btnSave"  type="submit"><span><i class="fa fa-floppy-o"></i></span> บันทึก </button>
                                 </div>&nbsp;
                             </div>
@@ -32,7 +32,7 @@
                                 <div class="container">
                                     <div class="col-lg-4 form-group">
                                         <label style="font-size:15px;"> เลขที่อ้างอิง </label>
-                                        <input type="text" class="form-control input-md m-bot15" id="refNumber" />
+                                        <input type="text" class="form-control input-md m-bot15" id="refNumber" value="<?php echo $result['RefNum']?>" />
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label style="font-size:15px;"> เลขที่อ้างอิงทางบัญชี <span class="required">*</span></label>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label style="font-size:15px;"> ส่วนลด </label>
-                                        <input type="text" class="form-control" id="discount" readonly="readonly"/>
+                                        <input type="text" class="form-control" id="discount" value="" readonly="readonly"/>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                 <div class="container">
                                     <div class="col-lg-4 form-group">
                                         <label style="font-size:15px;"> เลขที่อ้างอิง </label>
-                                        <input type="text" class="form-control input-md m-bot15" id="refNumber" />
+                                        <input type="text" class="form-control input-md m-bot15" id="refNumber" value=""/>
                                     </div>
                                     <div class="col-lg-4 form-group">
                                         <label style="font-size:15px;"> เลขที่อ้างอิงทางบัญชี <span class="required">*</span></label>
@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label style="font-size:15px;"> ส่วนลด </label>
-                                        <input type="text" class="form-control" id="discount" readonly="readonly"/>
+                                        <input type="text" class="form-control" id="discount" value="0" readonly="readonly"/>
                                     </div>
                                 </div>
                             </div>

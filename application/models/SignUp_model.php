@@ -6,6 +6,10 @@ class SignUp_model extends CI_Model {
         parent::__construct();
     }
     
+    /*
+     * function for check username 
+     */
+    
     public function chkUser($username)
     {
         // Check username
@@ -14,16 +18,13 @@ class SignUp_model extends CI_Model {
         return $query->num_rows();
     }
     
+    /*
+     * function for save data from register form to database
+     */   
     public function saveToDatabase($username,$password,$fname,$lname,$email) {        
-        // Check username
-        $num_rows = $this->chkUser($username);
-        if ($num_rows == 0) {
-            $this->db->query("INSERT INTO user(USRNAME, USRPASS, USRFNAME, USRLNAME, USREMAIL, USRCREDAT, USRUDDAT)
+        $rs =   $this->db->query("INSERT INTO user(USRNAME, USRPASS, USRFNAME, USRLNAME, USREMAIL, USRCREDAT, USRUDDAT)
                                 VALUES ('$username','$password','$fname','$lname','$email',CURRENT_DATE,'INTITIAL')");
-            return true;
-        }
-        return false;
-        
+        return $rs;
     }
 
 }

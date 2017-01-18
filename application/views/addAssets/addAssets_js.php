@@ -22,18 +22,20 @@
     <script src="<?php echo base_url(); ?>assets/js/accounting.min.js"></script>
     <script>
         var id = $('#durableId').val();
-        $( document ).ready(function() {       
+        $( document ).ready(function() { 
+            //XXX when id is empty then set Referece Number field to readOnly
             if(id != ""){
                 document.getElementById('refNumber').readOnly = true;
             }
         });
         
+        //XXX set datepicker format
         $( function() {
             $(".date-picker").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'dd/mm/yy',
-                maxDate: 0               
+                maxDate: 0
             });
         });
  
@@ -42,7 +44,7 @@
             //XXX calculate total price          
             var amount = document.getElementById('amount').value; 
             var unitprice = document.getElementById('unitprice').value; 
-            var total = amount * unitprice;
+            var total = amount * unitprice * 1;
             total.value = parseFloat(this.value).toFixed(2);
             document.getElementById('totalprice').value = total;
             
@@ -50,7 +52,7 @@
             $('#totalprice').change(function(){
                 //XXX calculate discount
                 var totalprice = document.getElementById('totalprice').value;
-                document.getElementById('discount').value = totalprice-total;
+                document.getElementById('discount').value = (totalprice-total)*1;
             });
        
         };
@@ -62,8 +64,12 @@
         //XXX validation
         $('#addAssets').validate({    
             rules: {
+                refNumber: {
+                        maxlength: 20
+                },
                 refAccNumber: {
-                    required: true
+                    required: true,
+                    maxlength: 20
                 },
                 deliveryDate: {
                     required: true
@@ -76,14 +82,16 @@
                 },
                 depRate: {
                     required: true,
-                    number: true
+                    number: true,
+                    maxlength: 3
                 },
                 assetName: {
                     required: true
                 },
                 amount: {
                     required: true,
-                    number: true
+                    number: true,
+                    maxlength: 20
                 },
                 unitprice: {
                     required: true,
@@ -97,8 +105,12 @@
                 }
             },
             messages: {
+                refNumber: {
+                        maxlength: "ไม่สามารถใส่ตัวเลขหรือตัวอักษรเกิน 20 หลัก"
+                },
                 refAccNumber: {
-                        required: "กรุณากรอกเลขอ้างอิงทางบัญชี"
+                        required: "กรุณากรอกเลขอ้างอิงทางบัญชี",
+                        maxlength: "ไม่สามารถใส่ตัวเลขหรือตัวอักษรเกิน 20 หลัก"
                 },
                 deliveryDate: {
                         required: "กรุณาเลือกวันที่รับเข้ามา"
@@ -111,7 +123,8 @@
                 },
                 depRate: {
                         required: "กรุณากรอกอัตราค่าเสื่อม",
-                        number: "กรุณากรอกเฉพาะตัวเลข"
+                        number: "กรุณากรอกเฉพาะตัวเลข",
+                        maxlength: "อัตราค่าเสื่อมราคาไม่ควรเกิน 3 หลัก"
                 },
                 assetName: {
                         required: "กรุณากรอกชื่อครุภัณฑ์"
@@ -131,7 +144,8 @@
                 }
             },
             submitHandler: function(form) {
-                var dataString  = 'refAccNumber=' + $("#refAccNumber").val();
+                var dataString  = 'refNumber=' + $("#refNumber").val();
+                    dataString += '&refAccNumber=' + $("#refAccNumber").val();
                     dataString += '&assetName=' + $("#assetName").val();
                     dataString += '&deliveryDate=' + moment($("#deliveryDate").val(),'DD-MM-YYYY').format('YYYY-MM-DD');
                     dataString += '&company=' + $("#company").val();
@@ -146,13 +160,16 @@
                         type	: "POST",
                         url 	: "<?php echo base_url(); ?>AddAssets/updateData",
                         data 	: dataString + '&id='+id,
+                        dataType: "text",
                         success	: function(res){
                             console.log(res);
                             if(res==="fail"){
                                 vdialog.error('มีข้อมูลอยู่แล้ว.');
-                            }else if(res=="1"){
+                            }else if(res=="success"){
                                 vdialog.success('บันทึกข้อมูลเรียบร้อยแล้ว.');
                             }
+                        },error  : function(err){
+                            vdialog.error('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.');
                         }
                     });
                 }else{
@@ -160,13 +177,16 @@
                         type	: "POST",
                         url 	: "<?php echo base_url(); ?>AddAssets/addData",
                         data 	: dataString,
+                        dataType: "text",
                         success	: function(res){
                             console.log(res);
                             if(res==="fail"){
                                 vdialog.error('มีข้อมูลอยู่แล้ว.');
-                            }else if(res=="1"){
+                            }else if(res=="success"){
                                 vdialog.success('บันทึกข้อมูลเรียบร้อยแล้ว.');
                             }
+                        },error  : function(err){
+                            vdialog.error('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.');
                         }
                     });
                 }    

@@ -4,7 +4,7 @@ class CalDepreciation extends CI_Controller
     private  $_hdrId;
     public function __construct(){
       parent::__construct();
-       if(empty($this->session->userdata("username"))){
+        if(empty($this->session->userdata("username"))){
             redirect('Login', 'refresh');
         } 
         $this->load->library('session');
@@ -92,23 +92,9 @@ class CalDepreciation extends CI_Controller
         return $this->_hdrId;
     }
     
-//    public function getHeaderId($data) {
-//        //XXX Get DPHHDR 
-//        $this->db->select('DPHHDR');
-//        $this->db->from('DEPHEADER');
-//        $this->db->where($data);
-//        $result = $this->db->get();
-//        $results = $result->result_array();
-//
-//        $hdr = $results;
-//        foreach ($hdr as $value) {
-//           $hdrId =  $value['DPHHDR'];
-//        }
-//        return $hdrId;
-//    }
     
     public function save() {
-
+        
         $headerId   = $this->session->userdata('hdrId');
         $user       = $this->session->userdata('username');
         header('Content-Type:application/json');
@@ -147,7 +133,7 @@ class CalDepreciation extends CI_Controller
     public function updateSum() {
         $hdrId = $this->input->post('hdrId');
         $sumDep = $this->input->post('sumDep');
-        $user       = $this->session->userdata('username');
+        $user    = $this->session->userdata('username');
         
         $array = array(
             "DPHSUMDEP" => $sumDep,
@@ -155,8 +141,9 @@ class CalDepreciation extends CI_Controller
         );
         
         $this->db->where('DPHHDR', $hdrId);
-        $data = $this->db->update('depheader', $array);
+        $this->db->set($array);
+        $this->db->update('depheader');
         
-        echo $data;
+        echo "success";
     }
 }

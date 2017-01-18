@@ -56,21 +56,21 @@
                                 <tr>                
                                     <td width="125" style="text-align: right"> &nbsp;วันที่นำเข้า จาก : </td>
                                     <td width="400">
-                                        <input type="text" class="date-picker form-control input-md m-bot15" id="deliveryDateFrom" name="deliveryDateFrom" style="margin-left: 20px;width: 80%"/>                        
+                                        <input type="text" class="date-picker form-control input-md m-bot15" id="deliveryDateFrom" name="deliveryDateFrom" style="margin-left: 20px;width: 80%" />                        
                                     </td>
                                     <td width="125" style="text-align: right"> &nbsp;ถึง : </td>
                                     <td width="400">
                                         <input type="text" class="date-picker form-control input-md m-bot15" id="deliveryDateTo" name="deliveryDateTo" style="margin-left: 20px;width: 80%" />                        
                                     </td>
-                                </tr>
+                                </tr
                                 <tr>
                                     <td width="125" style="text-align: right">&nbsp;สถานะ </td>
                                     <td width="400">
                                         <select class="form-control input-md m-bot15" id="status" name="status" style="margin-left: 20px;width: 80%">
                                             <option value="" disabled selected hidden></option>
-                                            <option value="">ยังใช้งานอยู่</option>
-                                            <option value="">ตัดจำหน่าย</option>
-                                            <option value="">สูญหาย</option>
+                                            <option value="1">ยังใช้งานอยู่</option>
+                                            <option value="2">ตัดจำหน่าย</option>
+                                            <option value="3">สูญหาย</option>
                                         </select>
                                     </td>
                                 </tr>

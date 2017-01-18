@@ -18,7 +18,7 @@
                     พิมพ์รายงานค่าเสื่อมราคา
                 </header>
                 <div class="panel-body">  
-                    <form class="form-inline" method="post" id="register_form" style="font-size: 15px;padding-left: 20px">
+                    <form class="form-inline" method="post" id="printForm" style="font-size: 15px;padding-left: 20px" action="DepreciationReport/printReport">
                         <table style="margin-left: 20px" >
                             <tbody>
                                 <tr>
@@ -65,13 +65,13 @@
                                     </td>
                                     <td width="125" style="text-align: right"> &nbsp;ปีงบประมาณ <span class="required">*</span></td>
                                     <td width="400">
-                                        <input type="text" class="date-picker-year form-control" id="year" name="year" style="margin-left: 20px;width: 80%" required="true"/>                        
+                                        <input type="text" class="form-control" id="year" name="year" style="margin-left: 20px;width: 80%" required="true"/>                        
                                     </td>
                                 </tr>
                           </tbody>
                         </table>
                         <div class="col-md-12 form-group" style="margin-top: 20px;text-align: center;">
-                            <a class="btn btn-warning btn-lg" id="btnPrint" style="width: 200px" type="button"><i class="fa fa-print"></i> พิมพ์งาน </a>
+                            <button class="btn btn-warning btn-lg" id="btnPrint" style="width: 200px" type="submit"><i class="fa fa-print"></i> พิมพ์งาน </button>
                             
                         </div>
                     </form>&nbsp;

@@ -20,6 +20,8 @@
     <script src="<?php echo base_url(); ?>assets/js/jquery.tabledit.js"></script>
     <!--accounting JS-->
     <script src="<?php echo base_url(); ?>assets/js/accounting.min.js"></script>
+    <!--moment-->
+    <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
     
     <script type="text/javascript">
         //XXX Set date from and date to
@@ -29,9 +31,9 @@
                 changeYear: true,
                 changeMonth: true,
                 showButtonPanel: true,
-                dateFormat: 'yy-mm-dd'
+                dateFormat: 'dd/mm/yy'
             };
-            
+                       
             $("#deliveryDateFrom").datepicker($.extend({
                 onSelect: function() {
                     var minDate = $(this).datepicker('getDate');
@@ -48,6 +50,10 @@
                }
            },datepickersOpt));
         }); 
+        
+        function setDate(val){
+            console.log(val);
+        }
 
 
         var table = $('#durable').DataTable({
@@ -73,7 +79,11 @@
 
     //XXX When click search button
     $('#btnSearch').click(function(e) {
-        if(checkRequiredCriteria()){
+        loadData();
+    });
+    
+    function loadData(){
+                if(checkRequiredCriteria()){
             var company_code = $('#company').val();
             var cate_code = $('#catetory').val();
             var dateFrom = $('#deliveryDateFrom').val();
@@ -86,8 +96,8 @@
                 dataType: 'json',
                 data: { company: company_code, 
                         cate: cate_code, 
-                        dateFrom: dateFrom,
-                        dateTo: dateTo,
+                        dateFrom: dateFrom==""?"":moment(dateFrom,'dd/mm/yy').format('YYYY-MM-DD'),
+                        dateTo: dateTo==""?"":moment(dateTo,'dd/mm/yy').format('YYYY-MM-DD'),
                         status: status},
                 success: function(res) {
                     var count = Object.keys(res).length;                  
@@ -107,7 +117,7 @@
                 }
             });
         }
-    });
+    };
 
       //** ************* Validation **************** **//
     function checkRequiredCriteria(){
@@ -137,10 +147,14 @@
                 },
                 "success": function(res){    
                     console.log(res);
-                    vdialog.success('ลบข้อมูลเรียบร้อยแล้ว.');  
+                    vdialog.success('ลบข้อมูลเรียบร้อยแล้ว.',function(e){
+                        loadData();
+                    });  
                 },
                 "error": function(err){
-                    vdialog.alert('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.' + err);
+                    vdialog.alert('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.' + err,function(e){
+                        loadData();
+                    });
                 }
             });
         });      

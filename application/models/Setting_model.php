@@ -20,9 +20,14 @@ class Setting_model extends CI_Model {
     
     public function deleteCompany($companyCode) {
         $rs = $this->db->query("DELETE FROM company WHERE CMPCD = '$companyCode'");
-        $query = $rs->result_array();
 
-        return $query;
+        return $rs;
+    }
+    
+    public function deleteCategory($cateCode) {
+        $rs = $this->db->query("DELETE FROM tabledetail WHERE TBDNO = 100 AND TBDCD = '$cateCode'");
+
+        return $rs;
     }
 
 }

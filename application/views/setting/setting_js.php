@@ -29,7 +29,10 @@
             columns: {
                 identifier: [1, 'code'],
                 editable: [[2, 'companyName'], [3, 'address'], [4, 'companyTel'],[5, 'companyFax']]
-            }
+            },
+            onAjax: function(action, serialize) {
+                window.location.reload;
+           }
         });
         
         //XXX Setiing category table
@@ -37,7 +40,7 @@
             url: '<?php echo base_url(); ?>Setting',
             columns: {
                 identifier: [2, 'TBDCD'],
-                editable: [[1, 'TBDNO'],[2, 'TBDCD'],[3, 'TBDDESC']]
+                editable: [[1, 'TBDNO'],[3, 'TBDDESC']]
             }
         });
     });
@@ -60,7 +63,6 @@
     });
     
     $('#btnAddCategory').click(function(e) {
-        alert("กรุณาใส่ข้อมูลให้ครบ.");
         var categoryDesc = $('#categoryDesc').val();
         var categoryCode = $('#categoryCode').val();
         

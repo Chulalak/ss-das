@@ -30,26 +30,26 @@ class CalDep_model extends CI_Model
     }
 
     public function search($company, $cate, $month, $year){
-        $rs = $this->db->query("SELECT HDR.DPHHDR
-                                  ,HDR.DPHSUMDEP
-                                  ,DUR.DRAID
-                                  ,DUR.DRANAME
-                                  ,DUR.DRAAMT
-                                  ,DUR.DRATYP
-                                  ,DATE_FORMAT(DEP.DEPDAT,'%d/%m/%Y') AS DEPDAT
-                                  ,DEP.DEPLASTCST
-                                  ,DUR.DRADEPRT
-                                  ,DEP.DEPLASTBV
-                                  ,DEP.DEPLASTMNT
-                                  ,DEP.DEPCURMNT
-                                  ,dep.DEPALLMNT
-                                  ,dep.DEPACCDEPLAST
-                                  ,dep.DEPDEPPERMNT
-                                  ,dep.DEPACCDEPCUR
-                                  ,dep.DEPACCDEPALL
-                                  ,dep.DEPBVCUR
+        $rs = $this->db->query("SELECT  HDR.DPHHDR
+                                        ,HDR.DPHSUMDEP
+                                        ,DUR.DRAID
+                                        ,DUR.DRANAME
+                                        ,DUR.DRAAMT
+                                        ,DUR.DRATYP
+                                        ,DATE_FORMAT(DEP.DEPDAT,'%d/%m/%Y') AS DEPDAT
+                                        ,DEP.DEPLASTCST
+                                        ,DUR.DRADEPRT
+                                        ,DEP.DEPLASTBV
+                                        ,DEP.DEPLASTMNT
+                                        ,DEP.DEPCURMNT
+                                        ,dep.DEPALLMNT
+                                        ,dep.DEPACCDEPLAST
+                                        ,dep.DEPDEPPERMNT
+                                        ,dep.DEPACCDEPCUR
+                                        ,dep.DEPACCDEPALL
+                                        ,dep.DEPBVCUR
                                 FROM depdetail DEP
-                                JOIN depheader HDR ON HDR.DPHHDR = DEP.DPHHDR
+                                JOIN depheader HDR ON HDR.dphhdr = DEP.dphhdr
                                 JOIN DURABLEARTICLES DUR ON DUR.DRAID = DEP.DRAID
                                 WHERE dur.CMPCD = '$company' and dur.DRATYP= $cate and DEPMNT = $month and dep.DEPYEAR=$year");
         $query = $rs->result_array();
@@ -58,24 +58,32 @@ class CalDep_model extends CI_Model
     }
     
     public function getData($company, $cate, $month, $year){
-        $rs = $this->db->query("SELECT DUR.DRAID
-                                  ,DUR.DRANAME
-                                  ,DUR.DRAAMT
-                                  ,DUR.DRATYP
-                                  ,DATE_FORMAT(DEP.DEPDAT,'%d/%m/%Y') AS DEPDAT
-                                  ,DEP.DEPLASTCST
-                                  ,DUR.DRADEPRT
-                                  ,DEP.DEPLASTBV
-                                  ,DEP.DEPLASTMNT
-                                  ,DEP.DEPCURMNT
-                                  ,dep.DEPALLMNT
-                                  ,dep.DEPACCDEPLAST
-                                  ,dep.DEPDEPPERMNT
-                                  ,dep.DEPACCDEPCUR
-                                  ,dep.DEPACCDEPALL
-                                  ,dep.DEPBVCUR
-                                FROM depdetail DEP JOIN DURABLEARTICLES DUR ON DUR.DRAID = DEP.DRAID
-                                WHERE dur.CMPCD = '$company' and dur.DRATYP= $cate and DEPMNT = $month and dep.DEPYEAR=$year");
+        $rs = $this->db->query("SELECT  hdr.dphhdr
+                                        ,cmp.cmplname
+                                        ,hdr.dphsumdep
+                                        ,dur.draid
+                                        ,dur.draname
+                                        ,dur.draamt
+                                        ,dur.dratyp
+                                        ,dtl.tbddesc
+                                        ,date_format(dep.depdat,'%d/%m/%Y') AS depdat
+                                        ,dep.deplastcst
+                                        ,dur.dradeprt
+                                        ,dep.deplastbv
+                                        ,dep.deplastmnt
+                                        ,dep.depcurmnt
+                                        ,dep.depallmnt
+                                        ,dep.depaccdeplast
+                                        ,dep.depdeppermnt
+                                        ,dep.depaccdepcur
+                                        ,dep.depaccdepall
+                                        ,dep.depbvcur
+                                 FROM depdetail dep
+                                 JOIN depheader hdr ON hdr.dphhdr = dep.dphhdr
+                                 JOIN durablearticles dur ON dur.draid = dep.draid
+                                 JOIN company cmp ON cmp.cmpcd = dur.cmpcd
+                                 JOIN tabledetail dtl ON dtl.tbdno = 100 and dtl.tbdcd = dur.dratyp
+                                 WHERE dur.cmpcd = '$company' AND dur.dratyp= $cate AND depmnt = $month AND dep.depyear = $year");
 //        $query = $rs->result_array();
 //        $rows = $rs->num_rows();
 

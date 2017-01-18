@@ -31,8 +31,6 @@ class FindAssets extends CI_Controller
         if (empty($cate)){ $cate   = 'null'; }
         if (empty($status)){ $status   = 'null'; }
       
-//        var_dump($dateFrom , $dateTo ,$cate , $status);
-//        die();
         $data = $this->FindAssets_model->search($company,$cate,$dateFrom,$dateTo,$status);
         echo json_encode($data);
     }

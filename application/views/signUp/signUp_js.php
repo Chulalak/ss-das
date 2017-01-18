@@ -17,7 +17,7 @@
     <!-- javascript for validate form -->
     <script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js"></script>
     <script>
-//        vdialog={};
+        //XXX When click save button then validation any data in fields 
        $('#btnSave').click(function(e) {           
             $("#register_form").validate({
               rules: {
@@ -42,11 +42,11 @@
                 txtUsername: "กรุณากรอกชื่อผู้ใช้",               
                 txtPassword: {
                     required: "กรุณากรอกรหัสผ่าน",
-                    minlength: "Your password must be at least 5 characters long"
+                    minlength: "รหัสผ่านควรมีอย่างน้อย 5 ตัวอักษร"
                 },
                 txtConPassword: {
                     required: "กรุณากรอกรหัสผ่านอีกครั้ง",
-                    minlength: "Your password must be at least 5 characters long",
+                    minlength: "รหัสผ่านควรมีอย่างน้อย 5 ตัวอักษร",
                     equalTo: "กรุณากรอกรหัสผ่านอีกครั้ง รหัสผ่านไม่ตรงกัน"
                 },
                 txtFName: "กรุณากรอกชื่อจริงของคุณ",
@@ -56,33 +56,34 @@
                     email: "รูปแบบอีเมลไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง"
                 }
               },
-              submitHandler: function (form) { // for demo
-                var dataString  = 'username=' + $("#txtUsername").val();
-                    dataString += '&password=' + $("#txtPassword").val();
-                    dataString += '&fname=' + $("#txtFName").val();
-                    dataString += '&lname=' + $("#txtLName").val();
-                    dataString += '&email=' + $("#txtEmail").val();
-                    console.log(dataString);
-                $.ajax({
-                    type	: "POST",
-                    url 	: "<?php echo base_url(); ?>SignUp/signup",
-                    data 	: dataString,
-                    dataType    : 'json',
-                    success	: function(html){
-                        console.log(html);
-                        if(html==1){
-                            vdialog.success('บันทึกข้อมูลเรียบร้อยแล้ว.', function(){
-                                window.location.href = 'Home';
-                            });
-                        }else if(html==""){
-                            vdialog.error('ไม่สามารถเพิ่มข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบ.');
-                        }                      
-                    }
-                });
-                
-              }
+              //XX when submit form
+                submitHandler: function (form) { 
+                    var dataString  = 'username=' + $("#txtUsername").val();
+                        dataString += '&password=' + $("#txtPassword").val();
+                        dataString += '&fname=' + $("#txtFName").val();
+                        dataString += '&lname=' + $("#txtLName").val();
+                        dataString += '&email=' + $("#txtEmail").val();
+                        console.log(dataString);
+                    $.ajax({
+                        type	: "POST",
+                        url 	: "<?php echo base_url(); ?>SignUp/signup",
+                        data 	: dataString,
+                        dataType    : 'text',
+                        success	: function(res){
+                            console.log(res);
+                            if(res === "success"){
+                                vdialog.success('บันทึกข้อมูลเรียบร้อยแล้ว.', function(){
+                                    window.location.href = 'Home';
+                                });
+                            }else if(res === "fail"){
+                                vdialog.error('มีชื่อผู้ใช้นี้แล้ว.');
+                            }                      
+                        },error    : function(err){
+                            vdialog.error('พบข้อผิดพลาดบางประการ กรุณาติดต่อผู้ดูแลระบบ.');
+                        }
+                    });                
+                }
             });
-
         });
     </script>
 

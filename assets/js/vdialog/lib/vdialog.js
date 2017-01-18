@@ -46,7 +46,7 @@
 }(this, function($) {
   'use strict';
 
-  var vdialog, zIndex = 1000, // jshint ignore:line
+  var vdialog, zIndex = 100000, // jshint ignore:line
     cache = [],
     template = '' +
     '<div class="vdialog">' +

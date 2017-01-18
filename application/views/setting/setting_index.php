@@ -3,11 +3,11 @@
       <!--===========================breadcrumb================================-->
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-cogs"></i> จัดการทั่วไป</h3>
+                <h3 class="page-header"><i class="fa fa-cogs"></i> ตั้งค่าทั่วไป</h3>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-home"></i><a href="Home">หน้าแรก</a></li>
                     <li><i class="fa fa-cog"></i><a href="Home">ตั้งค่า</a></li>
-                    <li><i class="fa fa-cogs"></i>จัดการทั่วไป</li>
+                    <li><i class="fa fa-cogs"></i>ตั้งค่าทั่วไป</li>
                 </ol>
             </div>
         </div>

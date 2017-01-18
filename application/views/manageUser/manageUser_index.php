@@ -3,11 +3,11 @@
       <!--===========================breadcrumb================================-->
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-user"></i> จัดการผู้ใช้</h3>
+                <h3 class="page-header"><i class="fa fa-user"></i> ตั้งค่าผู้ใช้</h3>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-home"></i><a href="Home">หน้าแรก</a></li>
                     <li><i class="fa fa-cog"></i><a href="Home">ตั้งค่า</a></li>
-                    <li><i class="fa fa-user"></i>จัดการผู้ใช้</li>
+                    <li><i class="fa fa-user"></i>ตั้งค่าผู้ใช้</li>
                 </ol>
             </div>
         </div>
@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                       จัดการผู้ใช้งาน
+                       ตั้งค่าผู้ใช้งาน
                     </header>
                     <div class="panel-body">   
                         <div class="col-md-12 form-group">

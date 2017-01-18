@@ -71,8 +71,6 @@ class ManageUser extends CI_Controller{
             $data = $this->ManageUser_model->insertUser($username,$password,$fname,$lname,$email,$role);
         }else{
             $code = utf8_decode($username);
-
-            $data = print "<script type 'text/javascript'>vdialog.error('".$code." มีข้อมูลอยู่แล้ว');</script>";
         }
         echo $data;
     }
